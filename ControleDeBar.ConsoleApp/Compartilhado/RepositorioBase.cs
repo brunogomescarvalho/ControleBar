@@ -5,6 +5,7 @@ namespace ControleDeBar.ConsoleApp.Compartilhado
     public abstract class RepositorioBase
     {
         protected ArrayList listaRegistros;
+
         protected int contadorRegistros = 0;
 
         public virtual void Inserir(EntidadeBase registro)
@@ -42,7 +43,7 @@ namespace ControleDeBar.ConsoleApp.Compartilhado
 
         public virtual EntidadeBase SelecionarPorId(int id)
         {
-            EntidadeBase registroSelecionado = null;
+            EntidadeBase registroSelecionado = null!;
 
             foreach (EntidadeBase registro in listaRegistros)
             {

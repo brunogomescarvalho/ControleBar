@@ -18,6 +18,14 @@ namespace ControleDeBar.ConsoleApp.Compartilhado
             Console.WriteLine(subtitulo + "\n");
         }
 
+        public void MostrarTexto(string texto)
+        {
+            Console.Clear();
+
+            Console.WriteLine(texto);
+
+        }
+
         public void MostrarMensagem(string mensagem, ConsoleColor cor)
         {
             Console.WriteLine();
@@ -44,7 +52,7 @@ namespace ControleDeBar.ConsoleApp.Compartilhado
 
             Console.WriteLine("Digite s para Sair");
 
-            string opcao = Console.ReadLine();
+            string opcao = Console.ReadLine()!;
 
             return opcao;
         }
@@ -77,6 +85,7 @@ namespace ControleDeBar.ConsoleApp.Compartilhado
             if (registros.Count == 0)
             {
                 MostrarMensagem("Nenhum registro cadastrado", ConsoleColor.DarkYellow);
+                return;
             }
 
             MostrarTabela(registros);
@@ -174,6 +183,15 @@ namespace ControleDeBar.ConsoleApp.Compartilhado
             }
 
             return temErros;
+        }
+
+        protected void MostrarLista(ArrayList lista, string cabecalho)
+        {
+            Console.WriteLine(cabecalho);
+            foreach (var registro in lista)
+            {
+                Console.WriteLine(registro);
+            }
         }
 
         protected abstract EntidadeBase ObterRegistro();

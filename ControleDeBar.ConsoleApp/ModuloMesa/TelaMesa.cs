@@ -19,16 +19,20 @@ namespace ControleDeBar.ConsoleApp.ModuloMesa
 
         protected override void MostrarTabela(ArrayList registros)
         {
-            foreach (Mesa item in registros)
+            if (registros.Count > 0)
             {
-                Console.WriteLine($"{item.id} - {(item.disponivel ? "Disponível":"Ocupada")}");
+                string cabecalho = $"{"ID",-3} | {"Capacidade",-12} | {"STATUS",-20}\n----------------------------------";
+
+                MostrarLista(registros, cabecalho);
             }
-            Console.ReadLine();
         }
 
         protected override EntidadeBase ObterRegistro()
         {
-            throw new NotImplementedException();
+            Console.WriteLine("Informe a capacidade de pessoas da mesa");
+            int capacidade = int.Parse(Console.ReadLine()!);
+
+            return new Mesa(capacidade);
         }
     }
 }

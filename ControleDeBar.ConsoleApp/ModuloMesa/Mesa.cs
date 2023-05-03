@@ -10,23 +10,41 @@ namespace ControleDeBar.ConsoleApp.ModuloMesa
 {
     public class Mesa : EntidadeBase
     {
-        public int CapacidadeDePessoas { get; set; }
+        public int CapacidadeDePessoas { get;private set; }
+        public bool Disponivel { get; private set; }
 
-        public bool disponivel { get; set; }
+
         public Mesa(int capacidadeDePessoas)
         {
-            this.disponivel = true;
+            this.Disponivel = true;
             CapacidadeDePessoas = capacidadeDePessoas;
+        }
+
+        public void AlterarStatusMesa()
+        {
+            this.Disponivel = !this.Disponivel;
         }
 
         public override void AtualizarInformacoes(EntidadeBase registroAtualizado)
         {
-            throw new NotImplementedException();
+            Mesa mesa = (Mesa)registroAtualizado;
+            CapacidadeDePessoas = mesa.CapacidadeDePessoas;
         }
 
         public override ArrayList Validar()
         {
-            throw new NotImplementedException();
+            ArrayList list = new();
+            if (CapacidadeDePessoas <= 0)
+            {
+                list.Add("É necessário incluir a quantidade de pessoas que a mesa comporta");
+            }
+            return list;
+        }
+
+        public override string ToString()
+        {
+            return $"{id,-3} | {CapacidadeDePessoas + " pessoas",-12} | {(Disponivel ? "Disponível" : "Ocupada"),-20}";
+
         }
     }
 }

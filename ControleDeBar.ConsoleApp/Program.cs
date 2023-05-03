@@ -16,11 +16,18 @@ namespace ControleDeBar.ConsoleApp
             RepositorioProduto repositorioProduto = new RepositorioProduto(new ArrayList());
             RepositorioMesa repositorioMesa = new RepositorioMesa(new ArrayList());
             RepositorioConta repositorioConta = new RepositorioConta(new ArrayList());
+
+            TelaGarcom telaGarcom = new TelaGarcom(repositorioGarcom);
+            TelaMesa telaMesa = new TelaMesa(repositorioMesa);
+            TelaProduto telaProduto = new TelaProduto(repositorioProduto);
+            TelaConta telaConta = new TelaConta(repositorioConta,telaGarcom, telaMesa, telaProduto);
+
             AdicionarItens(repositorioProduto, repositorioMesa, repositorioGarcom);
 
             TelaBase tela;
+            bool continuar = true;
 
-            while (true)
+            while (continuar)
             {
                 try
                 {
@@ -38,30 +45,32 @@ namespace ControleDeBar.ConsoleApp
 
                     switch (opcao)
                     {
-                        case 1: tela = new TelaGarcom(repositorioGarcom); break;
-                        case 2: tela = new TelaMesa(repositorioMesa); break;
-                        case 3: tela = new TelaProduto(repositorioProduto); break;
-                        case 4: tela = new TelaConta(repositorioConta, repositorioGarcom, repositorioMesa, repositorioProduto); break;
+                        case 1: tela = telaGarcom; break;
+                        case 2: tela = telaMesa; break;
+                        case 3: tela = telaProduto; break;
+                        case 4: tela = telaConta; break;
+                        case 9: continuar = false;continue;
                         default: continue;
                     }
 
                     string subMenu = "";
 
-
-                    if (tela is TelaConta conta)
+                    if (tela is TelaConta)
                     {
                         do
                         {
                             subMenu = tela.ApresentarMenu();
-                            TelaConta telaConta = conta;
 
                             switch (subMenu)
                             {
                                 case "1": telaConta.InserirNovoRegistro(); break;
-                                case "2": tela.VisualizarRegistros(true); Console.ReadKey(); break;
-                                case "3": telaConta.MostrarPedidosEmAberto(); break;
-                                case "4": telaConta.IncluirPedido(); break;
-                                case "5": telaConta.Finalizar(); break;
+                                case "2": telaConta.ExibirContasCadastradas(); break;
+                                case "3": telaConta.ExibirContasEmAberto(); break;
+                                case "4": telaConta.ExibirDetalhesConta(); break;
+                                case "5": telaConta.IncluirPedido(); break;
+                                case "6": telaConta.ExcluirPedido(); break;
+                                case "7": telaConta.Finalizar(); break;
+                                case "8": telaConta.ExibirFaturamentoDiario(); break;
 
                             }
                         } while (subMenu != "s");
@@ -74,7 +83,7 @@ namespace ControleDeBar.ConsoleApp
                         switch (subMenu)
                         {
                             case "1": tela.InserirNovoRegistro(); break;
-                            case "2": tela.VisualizarRegistros(true); break;
+                            case "2": tela.VisualizarRegistros(true); Console.ReadKey(); break;
                             case "3": tela.EditarRegistro(); break;
                             case "4": tela.ExcluirRegistro(); break;
 
@@ -101,10 +110,10 @@ namespace ControleDeBar.ConsoleApp
             repositorioGarcom.Inserir(new Garcom("Alfredo"));
             repositorioGarcom.Inserir(new Garcom("Antenor"));
 
-            repositorioProduto.Inserir(new Produto("Coca-Cola", "Lata 350ml", 4_50));
-            repositorioProduto.Inserir(new Produto("Aipim Frito", "Porção 500g", 14_00));
-            repositorioProduto.Inserir(new Produto("Torresminho", "Porção 500g", 12_00));
-            repositorioProduto.Inserir(new Produto("Cerveja Skol", "Garrafa 600ml", 8));
+            repositorioProduto.Inserir(new Produto("Coca-Cola", "Lata 350ml", 4.50M));
+            repositorioProduto.Inserir(new Produto("Aipim Frito", "Porção 500g", 14.00M));
+            repositorioProduto.Inserir(new Produto("Torresminho", "Porção 500g", 12.00M));
+            repositorioProduto.Inserir(new Produto("Cerveja Skol", "Garrafa 600ml", 8.0M));
 
             repositorioMesa.Inserir(new Mesa(4));
             repositorioMesa.Inserir(new Mesa(6));

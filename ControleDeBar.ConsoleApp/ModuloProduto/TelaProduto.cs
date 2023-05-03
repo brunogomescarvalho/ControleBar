@@ -19,11 +19,11 @@ namespace ControleDeBar.ConsoleApp.ModuloProduto
 
         protected override void MostrarTabela(ArrayList registros)
         {
-            foreach (Produto item in registros)
+            if (registros.Count > 0)
             {
-                Console.WriteLine($"{item.id} - {item.nome} - {item.descricao} - {item.preco}");
+                string cabecalho = $"{"ID",-3} | {"NOME",-18} | {"DESCRIÇAO",-18} | {"PREÇO",-10}";
+                MostrarLista(registros, cabecalho);
             }
-            Console.ReadLine();
         }
 
         protected override EntidadeBase ObterRegistro()

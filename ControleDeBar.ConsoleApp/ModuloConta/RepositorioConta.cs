@@ -1,13 +1,5 @@
 ﻿using ControleDeBar.ConsoleApp.Compartilhado;
-using ControleDeBar.ConsoleApp.ModuloGarcom;
-using ControleDeBar.ConsoleApp.ModuloMesa;
-using ControleDeBar.ConsoleApp.ModuloProduto;
-using System;
 using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ControleDeBar.ConsoleApp.ModuloConta
 {
@@ -21,6 +13,40 @@ namespace ControleDeBar.ConsoleApp.ModuloConta
         public override Conta SelecionarPorId(int id)
         {
             return(Conta) base.SelecionarPorId(id);
+        }
+
+        public decimal CalcularFaturamentoDoDia(DateTime data)
+        {
+            decimal valor = 0;
+            foreach (Conta item in listaRegistros)
+            {
+                if (item.DataConta.Date == data)
+                {
+                    foreach (Pedido pedido in item.Pedidos)
+                    {
+                        valor += pedido.CalcularValorPedido();
+                    }
+                }
+            }
+
+            return valor;
+        }
+
+        public ArrayList MostrarContasEmAberto()
+        {
+            ArrayList registros = listaRegistros;
+
+            ArrayList contasEmAberto = new();
+
+            foreach (Conta item in registros)
+            {
+                if (item.Aberta == true)
+                {
+                    contasEmAberto.Add(item);
+                }
+            }
+
+            return contasEmAberto;
         }
     }
 }

@@ -1,10 +1,6 @@
 ﻿using ControleDeBar.ConsoleApp.Compartilhado;
-using System;
+using ControleDeBar.ConsoleApp.ModuloConta;
 using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ControleDeBar.ConsoleApp.ModuloGarcom
 {
@@ -17,11 +13,12 @@ namespace ControleDeBar.ConsoleApp.ModuloGarcom
         }
         protected override void MostrarTabela(ArrayList registros)
         {
-            foreach (Garcom item in registros)
+            if (registros.Count > 0)
             {
-                Console.WriteLine($"{item.id} - {item.nome}");
+                string cabecalho = "Selecionar Garçom\n\nID  | NOME\n-------------------";
+                MostrarLista(registros, cabecalho);
             }
-            Console.ReadKey();
+
         }
 
         protected override Garcom ObterRegistro()
@@ -29,10 +26,10 @@ namespace ControleDeBar.ConsoleApp.ModuloGarcom
             Console.WriteLine("Informe o nome:");
             string nome = Console.ReadLine()!;
 
-           return new Garcom(nome);
-     
+            return new Garcom(nome);
+
         }
 
-       
+
     }
 }
